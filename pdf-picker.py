@@ -9,12 +9,12 @@ from typing import NoReturn, Optional
 import pymupdf
 
 
-def merge_strings(*strings: list[str]) -> Optional[str]:
+def merge_strings(*strings: str) -> Optional[str]:
     """
     Merge strings which might be None.
     """
-    strings = [s for s in strings if s is not None]
-    return " ".join(strings) if strings else None
+    filtered_strings = [s for s in strings if s is not None]
+    return " ".join(filtered_strings) if filtered_strings else None
 
 
 def send_error(error: str) -> NoReturn:
@@ -29,7 +29,7 @@ def send_error(error: str) -> NoReturn:
 def try_running_subprocess(
     cmd: list[str],
     not_found_error: str = "Command not found!",
-    input: str = None,
+    input: Optional[str] = None,
 ) -> subprocess.CompletedProcess:
     try:
         result = subprocess.run(
@@ -41,7 +41,7 @@ def try_running_subprocess(
 
 
 def search_pdfs(
-    base_directory: str, cmd: str = None, hidden: bool = False
+    base_directory: str, cmd: Optional[str] = None, hidden: bool = False
 ) -> list[str]:
     """
     Search for PDFs in the specified base directory. By default, we
@@ -81,7 +81,10 @@ def search_pdfs(
 
 
 def select(
-    items: list[str], cmd: str, indices: bool = False, check: bool = True
+    items: list[str],
+    cmd: Optional[str],
+    indices: bool = False,
+    check: bool = True,
 ) -> int:
     """
     Launch a user-selection for the list `items` using for example
@@ -105,14 +108,16 @@ def select(
         input="\n".join(items),
     ).stdout
     if indices:
-        selection = re.match(r"\d*", selection)[0]
-    if selection == "":
+        match = re.match(r"\d*", selection)
+    if not match or match[0] == "":
         if check:
             send_error("Nothing selected!")
             exit(1)
         else:
-            selection = "-1"
-    return int(selection)
+            selection = -1
+    else:
+        selection = int(match[0])
+    return selection
 
 
 def get_toc(path: str, mupdf_coordinate_space: bool = False) -> list:
@@ -142,8 +147,8 @@ def get_toc(path: str, mupdf_coordinate_space: bool = False) -> list:
 def open_pdf(
     path: str,
     cmd: str,
-    position_args: str = None,
-    position: list[int] = None,
+    position_args: Optional[str] = None,
+    position: Optional[list[int]] = None,
 ) -> None:
     """
     Open a PDF, optionally at a specific position (consisting of a list
@@ -166,10 +171,13 @@ def open_pdf(
             not_found_error="PDF viewer not found!",
         )
     else:
-        for i in range(3):
-            position_args = re.sub(
-                pos_strings[i], str(position[i]), position_args
-            )
+        if position_args:
+            for i in range(3):
+                position_args = re.sub(
+                    pos_strings[i], str(position[i]), position_args
+                )
+        else:
+            position_args = ""
         try_running_subprocess(
             shlex.split(cmd) + [path] + shlex.split(position_args),
             not_found_error="PDF viewer not found!",
@@ -280,6 +288,7 @@ Have fun reading! :D"""
     else:
         search_dir = expandvars("$HOME")
     pdfs = search_pdfs(search_dir, cmd=args.search_cmd, hidden=args.hidden)
+
     # Let the user select a specific file
     pdf_items = [p if args.full_path else re.sub(r".*/", "", p) for p in pdfs]
     selected_pdf = pdfs[
