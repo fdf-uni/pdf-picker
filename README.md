@@ -18,6 +18,7 @@ In case that you have some documents which don't satisfy this requirement, but t
 Simply save the file `pdf_picker.py` wherever you want and install `pymupdf` using for example `pip install pymupdf`.
 
 ### Hard Dependencies
+- Python 3.9+
 - `pymupdf` library (mainly used for extraction of TOC)
 
 ### Soft Dependencies
