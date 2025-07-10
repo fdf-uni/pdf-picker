@@ -24,7 +24,7 @@ Simply save the file `pdf_picker.py` wherever you want and install `pymupdf` usi
 
 > Note: All these programs can be customized using command line arguments, see [Usage](#Usage), which is why I refer to them as soft dependencies.
 
-- `fd` (used for slightly faster search and mainly the ability to skip hidden files)
+- `fd` (used for slightly faster search and mainly the ability to skip hidden files)  
     If `fd` is not found, the script automatically falls back to `find`, so if you prefer the latter, there's nothing you need to do. :D
 - `fzf`, the default selection command
 - `zathura`, the default PDF viewer

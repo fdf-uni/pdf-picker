@@ -4,11 +4,12 @@ import re
 import shlex
 import subprocess
 from os.path import expandvars
+from typing import NoReturn, Optional
 
 import pymupdf
 
 
-def merge_strings(*strings: list[str]):
+def merge_strings(*strings: list[str]) -> Optional[str]:
     """
     Merge strings which might be None.
     """
@@ -16,7 +17,7 @@ def merge_strings(*strings: list[str]):
     return " ".join(strings) if strings else None
 
 
-def send_error(error: str):
+def send_error(error: str) -> NoReturn:
     print(error)
     try:
         subprocess.run(["notify-send", error])
@@ -29,7 +30,7 @@ def try_running_subprocess(
     cmd: list[str],
     not_found_error: str = "Command not found!",
     input: str = None,
-):
+) -> subprocess.CompletedProcess:
     try:
         result = subprocess.run(
             cmd, capture_output=True, text=True, input=input
@@ -39,7 +40,9 @@ def try_running_subprocess(
     return result
 
 
-def search_pdfs(base_directory: str, cmd: str = None, hidden: bool = False):
+def search_pdfs(
+    base_directory: str, cmd: str = None, hidden: bool = False
+) -> list[str]:
     """
     Search for PDFs in the specified base directory. By default, we
     try to use `fd`. If it is not installed, we fall back to `find`.
@@ -77,7 +80,9 @@ def search_pdfs(base_directory: str, cmd: str = None, hidden: bool = False):
     return pdfs
 
 
-def select(items: list[str], cmd: str, indices=False, check=True):
+def select(
+    items: list[str], cmd: str, indices: bool = False, check: bool = True
+) -> int:
     """
     Launch a user-selection for the list `items` using for example
     fzf (this is the default), fuzzel or rofi. The precise command
@@ -110,7 +115,7 @@ def select(items: list[str], cmd: str, indices=False, check=True):
     return int(selection)
 
 
-def get_toc(path, mupdf_coordinate_space: bool = False):
+def get_toc(path: str, mupdf_coordinate_space: bool = False) -> list:
     """
     Extract the table of contents from a PDF file.
     """
@@ -139,7 +144,7 @@ def open_pdf(
     cmd: str,
     position_args: str = None,
     position: list[int] = None,
-):
+) -> None:
     """
     Open a PDF, optionally at a specific position (consisting of a list
     including the page number, x position and y position, in that order),
