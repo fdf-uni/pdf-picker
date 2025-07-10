@@ -109,15 +109,15 @@ def select(
     ).stdout
     if indices:
         match = re.match(r"\d*", selection)
-    if not match or match[0] == "":
-        if check:
-            send_error("Nothing selected!")
-            exit(1)
+        if not match or match[0] == "":
+            if check:
+                send_error("Nothing selected!")
+                exit(1)
+            else:
+                selection = -1
         else:
-            selection = -1
-    else:
-        selection = int(match[0])
-    return selection
+            selection = match[0]
+    return int(selection)
 
 
 def get_toc(path: str, mupdf_coordinate_space: bool = False) -> list:
