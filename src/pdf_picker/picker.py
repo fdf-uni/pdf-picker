@@ -182,11 +182,11 @@ def main():
 
     epilog = """example usage:
     # Use rofi as the selector with custom prompts
-    python %(prog)s -s 'rofi -dmenu -i -format i' -psa='-p PDF' -tsa='-p TOC'
+    %(prog)s -s 'rofi -dmenu -i -format i' -psa='-p PDF' -tsa='-p TOC'
 
     # Use fuzzel as a selector and sioyek as the pdf viewer
     # Also show full paths and only search within the Documents directory
-    python %(prog)s -f -b ~/Documents  \\
+    %(prog)s -f -b ~/Documents  \\
         -s 'fuzzel -d --counter --index -w 100' \\
         -p 'sioyek' -mc -pa '--page $page --xloc $xloc --yloc $yloc'
 

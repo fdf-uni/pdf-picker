@@ -33,10 +33,10 @@ Simply save the file `pdf_picker.py` wherever you want and install `pymupdf` usi
 ## Usage
 
 ```
-usage: pdf_picker.py [-h] [-f] [-nt] [-hi] [-b BASE_DIRECTORY] [-s SELECTOR]
-                     [-si] [-psa PDF_SELECTOR_ARGS] [-tsa TOC_SELECTOR_ARGS]
-                     [-p PDF_VIEWER] [-pa PDF_VIEWER_ARGS] [-mc]
-                     [--search-cmd SEARCH_CMD]
+usage: picker.py [-h] [-f] [-nt] [-hi] [-b BASE_DIRECTORY] [-s SELECTOR] [-si]
+                 [-psa PDF_SELECTOR_ARGS] [-tsa TOC_SELECTOR_ARGS]
+                 [-p PDF_VIEWER] [-pa PDF_VIEWER_ARGS] [-mc]
+                 [--search-cmd SEARCH_CMD]
 
 Interactively open a PDF file, optionally at a specific TOC entry.
 
@@ -52,7 +52,7 @@ options:
                         command to launch for selecting items. It needs to
                         return the index of the selection, not the selection
                         itself. If this is not possible, please refer to
-                        `--selector-indices`.
+                        `--selector-indices`. (default: `fzf`)
   -si, --selector-indices
                         preceed selection items by their indices
   -psa, --pdf-selector-args PDF_SELECTOR_ARGS
@@ -64,7 +64,8 @@ options:
                         toc entry selection (please take the same caveat as
                         for `-psa` into account)
   -p, --pdf-viewer PDF_VIEWER
-                        command to launch for viewing pdf files
+                        command to launch for viewing pdf files (default:
+                        `zathura`)
   -pa, --pdf-viewer-args PDF_VIEWER_ARGS
                         arguments to optionally provide to the pdf viewer for
                         opening at a specific position. These can contain the
@@ -79,11 +80,11 @@ options:
 
 example usage:
     # Use rofi as the selector with custom prompts
-    python pdf_picker.py -s 'rofi -dmenu -i -format i' -psa='-p PDF' -tsa='-p TOC'
+    picker.py -s 'rofi -dmenu -i -format i' -psa='-p PDF' -tsa='-p TOC'
 
     # Use fuzzel as a selector and sioyek as the pdf viewer
     # Also show full paths and only search within the Documents directory
-    python pdf_picker.py -f -b ~/Documents  \
+    picker.py -f -b ~/Documents  \
         -s 'fuzzel -d --counter --index -w 100' \
         -p 'sioyek' -mc -pa '--page $page --xloc $xloc --yloc $yloc'
 
