@@ -104,7 +104,7 @@ def select(
             items[i] = f"{i}\t{items[i]}"
     selection = try_running_subprocess(
         shlex.split(cmd),
-        not_found_error="Selector not found!",
+        not_found_error=f"Selector ({cmd}) not found!",
         input="\n".join(items),
     ).stdout
     if indices:
@@ -168,7 +168,7 @@ def open_pdf(
     if position is None:
         try_running_subprocess(
             shlex.split(cmd) + [path],
-            not_found_error="PDF viewer not found!",
+            not_found_error=f"PDF viewer ({cmd}) not found!",
         )
     else:
         if position_args:
@@ -180,7 +180,7 @@ def open_pdf(
             position_args = ""
         try_running_subprocess(
             shlex.split(cmd) + [path] + shlex.split(position_args),
-            not_found_error="PDF viewer not found!",
+            not_found_error=f"PDF viewer ({cmd}) not found!",
         )
 
 
@@ -235,6 +235,7 @@ Have fun reading! :D"""
         help="""command to launch for selecting items. It needs to return the
         index of the selection, not the selection itself. If this is not
         possible, please refer to `--selector-indices`.
+        (default: `fzf`)
         """,
     )
     parser.add_argument(
@@ -258,7 +259,9 @@ Have fun reading! :D"""
         account)""",
     )
     parser.add_argument(
-        "-p", "--pdf-viewer", help="command to launch for viewing pdf files"
+        "-p",
+        "--pdf-viewer",
+        help="command to launch for viewing pdf files (default: `zathura`)",
     )
     parser.add_argument(
         "-pa",
