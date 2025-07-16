@@ -2,6 +2,6 @@
 
 
 def main():
-    import picker
+    from . import picker
 
     picker.main()
