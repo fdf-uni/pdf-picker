@@ -184,7 +184,7 @@ def open_pdf(
         )
 
 
-if __name__ == "__main__":
+def main():
     # A bit of argument parsing
     import argparse
 
@@ -327,3 +327,7 @@ Have fun reading! :D"""
             )
         else:
             open_pdf(selected_pdf, cmd=args.pdf_viewer)
+
+
+if __name__ == "__main__":
+    main()
