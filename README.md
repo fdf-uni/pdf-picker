@@ -15,7 +15,14 @@ In case that you have some documents which don't satisfy this requirement, but t
 
 ## Installation and Dependencies
 
-Simply save the file `pdf_picker.py` wherever you want and install `pymupdf` using for example `pip install pymupdf`.
+The recommended and probably simplest method is to use [uv](https://docs.astral.sh/uv/):
+```sh
+uv tool install git+https://github.com/fdf-uni/pdf-picker
+```
+
+On top of that, this repo also contains a [Nix package](https://github.com/fdf-uni/pdf-picker/blob/main/default.nix) for any Nix users. :)
+
+Alternatively, one could proceed with a manual installation by simply saving the Python script [src/pdf_picker/picker.py](https://github.com/fdf-uni/pdf-picker/blob/main/src/pdf_picker/picker.py) at some location and installing `pymupdf` using for example `pip install pymupdf`.
 
 ### Hard Dependencies
 - Python 3.9+
