@@ -53,20 +53,12 @@ def search_pdfs(
     if cmd is not None:
         pdfs = try_running_subprocess(shlex.split(cmd)).stdout.split("\n")[:-1]
     else:
+        cmd = ["fd", "-I", "-t", "f", "-e", "pdf", "-a", ".", base_directory]
+        if hidden:
+            cmd += ["-H"]
         try:
             pdfs = subprocess.run(
-                [
-                    "fd",
-                    "--no-ignore",
-                    "--hidden" if hidden else "",
-                    "--type",
-                    "file",
-                    "--extension",
-                    "pdf",
-                    "--absolute-path",
-                    ".",
-                    base_directory,
-                ],
+                cmd,
                 capture_output=True,
                 text=True,
             ).stdout.split("\n")[:-1]
