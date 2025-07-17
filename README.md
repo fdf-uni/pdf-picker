@@ -17,12 +17,16 @@ In case that you have some documents which don't satisfy this requirement, but t
 
 The recommended and probably simplest method is to use [uv](https://docs.astral.sh/uv/):
 ```sh
-uv tool install git+https://github.com/fdf-uni/pdf-picker
+uv tool install git+https://github.com/fdf-uni/pdf-picker.git
+```
+Alternatively, one can of course also use `pip`:
+```sh
+pip install git+https://github.com/fdf-uni/pdf-picker.git
 ```
 
 On top of that, this repo also contains a [Nix package](https://github.com/fdf-uni/pdf-picker/blob/main/default.nix) for any Nix users. :)
 
-Alternatively, one could proceed with a manual installation by simply saving the Python script [src/pdf_picker/picker.py](https://github.com/fdf-uni/pdf-picker/blob/main/src/pdf_picker/picker.py) at some location and installing `pymupdf` using for example `pip install pymupdf`.
+Lastly, there is also the option of simply saving the Python script [src/pdf_picker/picker.py](https://github.com/fdf-uni/pdf-picker/blob/main/src/pdf_picker/picker.py) at some location and installing `pymupdf` using for example `pip install pymupdf`.
 
 ### Hard Dependencies
 - Python 3.9+
