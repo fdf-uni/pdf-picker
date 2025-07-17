@@ -100,15 +100,13 @@ def select(
         input="\n".join(items),
     ).stdout
     if indices:
-        match = re.match(r"\d*", selection)
-        if not match or match[0] == "":
-            if check:
-                send_error("Nothing selected!")
-                exit(1)
-            else:
-                selection = -1
+        selection = re.search(r"\d*", selection).group(0)
+    if not selection or selection == "":
+        if check:
+            send_error("Nothing selected!")
+            exit(1)
         else:
-            selection = match[0]
+            selection = -1
     return int(selection)
 
 
