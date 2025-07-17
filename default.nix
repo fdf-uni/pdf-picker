@@ -6,14 +6,14 @@
 
 python3Packages.buildPythonApplication rec {
   pname = "pdf-picker";
-  version = "0.1.2";
+  version = "0.1.3";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "fdf-uni";
     repo = "pdf-picker";
     rev = "v${version}";
-    hash = "sha256-MwJo5ej3FgO0nbtps11hSj4jdTtP5vWhBHwz+edUCiw=";
+    hash = "sha256-+hzL1YoRpph9QlBvTU9LmciwV3uHyrmnNIypXg2ei9s=";
   };
 
   build-system = with python3Packages; [
